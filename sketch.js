@@ -59,13 +59,13 @@ function draw(){
     box2.display();
     ground.display();
     pig1.display();
-    //pig1.score();
+    pig1.score();
     log1.display();
 
     box3.display();
     box4.display();
     pig3.display();
-    //pig3.score();
+    pig3.score();
     log3.display();
 
     box5.display();
@@ -92,12 +92,29 @@ function mouseReleased(){
 
 function keyPressed(){
     if(keyCode === 32){
-       slingshot.attach(bird.body);
+        bird.trajectory=[]
+        Matter.Body.setPosition(bird.body, {x: 200, y:50});
+        slingshot.attach(bird.body);
+        gameState="onSling";
+        
     }
 }
-function getBackgroundImg(){
-    backgroundImg=loadImage("sprites/bg.png")
+async function getBackgroundImg(){
+    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    var responseJSON = await response.json();
+
+    var datetime = responseJSON.datetime;
+    var hour = datetime.slice(11,13);
     
+    if(hour>=06 && hour<=19){
+        bg = "sprites/bg.png";
+    }
+    else{
+        bg = "sprites/bg2.jpg";
+    }
+
+    backgroundImg = loadImage(bg);
+    console.log(hour);
 }
 //array-single line- index access
 //json-right side value- lhs index val - access = index name

@@ -10,7 +10,19 @@ class Bird extends BaseClass {
     //this.body.position.x = mouseX;
     //this.body.position.y = mouseY;
 
-    super.display();
+    var angle = this.body.angle;
+    push();
+    imageMode(CENTER);
+    if(gameState=="launched"){
+      translate(this.body.position.x, this.body.position.y);
+      rotate(angle);
+      
+      image(this.image, 0, 0, this.width, this.height);  
+    }else{
+      image(this.image, this.body.position.x, this.body.position.y, this.width, this.height);  
+    }
+    
+    pop();
 
     if(this.body.velocity.x > 10 && this.body.position.x > 200){
       var position = [this.body.position.x, this.body.position.y];
